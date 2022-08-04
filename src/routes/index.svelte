@@ -1,5 +1,7 @@
 <script>
 
+    import Footer from "./footer.svelte"
+    import Header from "./header.svelte"
 
     function capitalizedWord(word){
         return word.charAt(0).toUpperCase() + word.slice(1)
@@ -91,9 +93,7 @@
     
 </script>
 
-<div class="body">
-
-<h1>Pokedex</h1>
+<Header></Header>
 
     <div class="searchbar">
         <input bind:value={search_name} type="text" class="search" id="search" placeholder="Search Pokemon" on:input={search}>
@@ -114,11 +114,8 @@
         <button on:click={next}>next</button>
         {/if}
     </div>
-</div>
-    
-    <div class="footer">
-        made by Mr.Nr.15
-    </div>
+
+    <Footer></Footer>
 
 <style>
 
@@ -128,19 +125,6 @@
         --color-3: #EEF0F2;
         --color-4: #6F6866;
         --color-5: #011638;
-    }
-
-    .body{
-        min-height: calc(100vh - 19px - 16px - 16px);
-        background-color: var(--color-1);
-    }
-
-    h1{
-        text-align: center;
-        color: var(--color-3);
-        background-color: var(--color-5);
-        padding: 0.25em;
-        margin: 0;
     }
         
     .grid{
@@ -176,12 +160,13 @@
         border-color: darkgray;
     }
 
-    .footer{
-        background-color: var(--color-5);
-        color: white;
-        text-align: center;
-        padding: 1em;
-        margin: 0;
+    @media only screen and (max-width: 900px){
+
+        .pages{
+            font-size: 1.5em;
+            padding: 0.25em 0.5em;
+        }
+
     }
 
 </style>

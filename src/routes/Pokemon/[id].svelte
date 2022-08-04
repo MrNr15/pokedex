@@ -5,6 +5,7 @@
     let shiny = false
     let abilities = []
     let types = []
+    let stats = []
     
     export async function load({url2,params}){
         const id = params.id
@@ -22,6 +23,10 @@
 
         types = pokemon.types.map((data, index) => {
             return capitalizedWord(data.type.name)
+        })
+
+        stats = pokemon.stats.map((data, index) => {
+            return data.base_stat
         })
 
     }
@@ -44,12 +49,13 @@
 <script>
     
     import { onMount } from 'svelte';
+    import Footer from "../footer.svelte"
+    import Header from "../header.svelte"
     
     onMount(() => {
 
         
         let type_texts = document.querySelectorAll(".type")
-        console.log(types)
 
         for(let i = 0; i < type_texts.length; i++){
 
@@ -100,13 +106,13 @@
             type_texts[i].style.color = "black"
         }
 
-        console.log(document.querySelectorAll(".type"))
-
         }
 
     })
 
 </script>
+
+<Header></Header>
 
 <div class="main">
     <div class="background">
@@ -121,18 +127,9 @@
             <div class="information">
                 <p>Name: {capitalizedWord(pokemon.name)}</p>
                 <p>Id: {pokemon.id}</p>
-                <p>weight: {pokemon.weight}</p>
-                <br>
-                <p>Abilitys: </p>
-                <div class="align-horizontal">
-                    {#each abilities as ability}
-                    <div class="ability">
-                        {ability + " "}
-                    </div>
-                    {/each}
-                </div>
-                <br><br>
-                <p>Types: </p>
+                <p>Height: {pokemon.height}</p>
+                <p>Weight: {pokemon.weight}</p>
+                <p class="title">Types</p>
                 <div class="align-horizontal">
                     {#each types as type}
                     <div class="type" id="type">
@@ -140,32 +137,36 @@
                     </div>
                     {/each}
                 </div>
+                <p class="title">Abilitys</p>
+                <div class="align-horizontal">
+                    {#each abilities as ability}
+                    <div class="ability">
+                        {ability + " "}
+                    </div>
+                    {/each}
+                </div>
+
+                <div class="stats">
+                    <p class="title">Stats</p>
+                    Hp: {stats[0]} <br>
+                    Attack: {stats[1]} <br>
+                    Defence: {stats[2]} <br>
+                    Special-Attack: {stats[3]} <br>
+                    Special-defence: {stats[4]} <br>
+                    Speed: {stats[5]}
+                </div>
+
+                <br>
             </div>
         </div>
     </div>
 </div>
 
+<Footer></Footer>
+
 <style>
 
     :root{
-        --normal: #ffffff;
-        --flying: #ffffff;
-        --grass: #26ff00;
-        --poison: #ffffff;
-        --fire: #ffffff;
-        --water: #ffffff;
-        --bug: #ffffff;
-        --fairy: #ffffff;
-        --psychic: #ffffff;
-        --electric: #ffffff;
-        --ice: #ffffff;
-        --fighting: #ffffff;
-        --ground: #ffffff;
-        --rock: #ffffff;
-        --ghost: #ffffff;
-        --dragon: #ffffff;
-        --type: #000000;
-
         --color-1: #283044;
         --color-2: #78a1bb;
         --color-3: #ebf5ee;
@@ -185,6 +186,11 @@
     .steckbrief{
         display: flex;
         flex-direction: row;
+    }
+
+    h1{
+        margin: 0.2em 0 0.5em 0;
+        text-align: center;
     }
     
     img{
@@ -211,15 +217,21 @@
         border-width: 5px;
         border-color: var(--color-5);
     }
+
+    .stats{
+        background-color: var(--color-5);
+        padding: 0 1em 0 1em;
+    }
     
     .align-horizontal{
-        margin:  0 auto;
+        margin:  0;
         display: grid;
         display: flex;
         flex-wrap: wrap;
         grid-template-columns: repeat(auto-fit, minmax(50px, 120px));
         justify-content: center;
         margin: 0;
+        margin-bottom: 1em;
     }
     
     .align-horizontal > div{
@@ -229,13 +241,17 @@
         color: black;
         margin: 0.2em;
     }
+
+    .title{
+        margin: 0;
+        text-align: center;
+        font-size: 1.2em;
+    }
     
     @media only screen and (min-width: 900px){
         .main{
             width: 100%;
-            height: 90vh;
             display: flex;
-            justify-content: center;
             align-items: center;
             flex-direction: column;
         }
@@ -260,7 +276,7 @@
         }
 
         .background{
-            padding: 1em 1em 1em 1em;
+            padding: 1em 0.3em;
         }
         
     }
