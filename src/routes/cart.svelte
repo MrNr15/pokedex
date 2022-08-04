@@ -31,7 +31,7 @@
     }
 
     .cart:hover{
-        box-shadow: 0 0 10px black;
+        box-shadow: 0 0 15px white;
     }
 
     .image{

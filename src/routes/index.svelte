@@ -30,6 +30,8 @@
         pokemon = loadedPokemon
         search_pokemon = pokemon
         shown_pokemon = pokemon.slice(0,20)
+
+        search()
     }
 
     fetchPokemon()
@@ -84,6 +86,7 @@
     import { onMount } from 'svelte';
 
     onMount(() => {  
+
         document.getElementById("search").addEventListener("keypress", function(event){
             if (event.keyCode === 13){
                 search()
@@ -136,7 +139,7 @@
     }
 
     .searchbar{
-        padding: 1em;
+        padding: 1em 4em;
     }
 
 
@@ -145,7 +148,7 @@
         border: solid;
         border-width: 4px;
         border-color: lightgray;
-        font-size: 1em;
+        font-size: 1.3em;
     }
 
     .pages{
