@@ -4,6 +4,15 @@
 
 <style>
 
+    :root{
+        --color-1: #293960;
+        --color-6: #283044;
+        --color-2: #cedce5;
+        --color-3: #ebf5ee;
+        --color-4: #3d3735;
+        --color-5: #c14e4e;
+    }
+
     h1{
         text-align: center;
         color: var(--color-3);

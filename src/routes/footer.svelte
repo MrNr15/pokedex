@@ -5,7 +5,7 @@
 <style>
 
     .footer{
-        background-color: var(--color-5);
+        background-color: var(--color-4);
         color: white;
         text-align: center;
         padding: 1em;

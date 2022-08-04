@@ -95,6 +95,8 @@
 
 <Header></Header>
 
+<div class="background">
+    
     <div class="searchbar">
         <input bind:value={search_name} type="text" class="search" id="search" placeholder="Search Pokemon" on:input={search}>
     </div>
@@ -114,18 +116,11 @@
         <button on:click={next}>next</button>
         {/if}
     </div>
+</div>
 
     <Footer></Footer>
 
 <style>
-
-    :root{
-        --color-1: #EEC643;
-        --color-2: #97a1fc;
-        --color-3: #EEF0F2;
-        --color-4: #6F6866;
-        --color-5: #011638;
-    }
         
     .grid{
         display: grid;
@@ -135,10 +130,15 @@
         justify-content: center;
         justify-items: center;
     }
+    .background{
+        background-color: var(--color-1);
+        margin: 0;
+    }
 
     .searchbar{
-        margin: 1em;
+        padding: 1em;
     }
+
 
     .search{
         border-radius: 20px;
@@ -151,6 +151,7 @@
     .pages{
         font-size: 1.5em;
         padding: 0.5em 2em 0.5em 2em;
+        color: white;
     }
     .pages > button{
         font-size: 1em;
@@ -166,6 +167,17 @@
             font-size: 1.5em;
             padding: 0.25em 0.5em;
         }
+
+        .searchbar{
+        display: flex;
+        justify-content: center;
+        padding: 1em 0;
+        }
+
+    .search{
+        font-size: 1.4em;
+        width: 90%;
+    }
 
     }
 

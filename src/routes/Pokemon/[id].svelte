@@ -83,7 +83,7 @@
             color = "cornflowerblue"
             black_text = true
         } if (types[i] == "Psychic"){
-            color = "pink"
+            color = "palevioletred"
         } if (types[i] == "Bug"){
             color = "chartreuse"
             black_text = true
@@ -98,7 +98,6 @@
             color = "pink"
             black_text = true
         }
-
 
         type_texts[i].style.background = color
         type_texts[i].style.color = "white"
@@ -166,12 +165,9 @@
 
 <style>
 
-    :root{
-        --color-1: #283044;
-        --color-2: #78a1bb;
-        --color-3: #ebf5ee;
-        --color-4: #bfa89e;
-        --color-5: #8b786d;
+    :global(html){
+        overflow-x: hidden;
+        font-family: sans-serif;
     }
 
     
@@ -179,6 +175,7 @@
         background-color: var(--color-1);
         padding: 1em 3em 1em 3em;
         color: white;
+        margin: 25vh 0;
         
         font-size: 1.5em;
     }
@@ -219,8 +216,9 @@
     }
 
     .stats{
-        background-color: var(--color-5);
+        background-color: var(--color-2);
         padding: 0 1em 0 1em;
+        color: black;
     }
     
     .align-horizontal{
@@ -237,7 +235,7 @@
     .align-horizontal > div{
         padding: 0 0.5em 0 0.5em;
         border-radius: 3em;
-        background-color: var(--color-2);
+        background-color: var(--color-5);
         color: black;
         margin: 0.2em;
     }
@@ -254,6 +252,11 @@
             display: flex;
             align-items: center;
             flex-direction: column;
+            background-color: var(--color-6);
+        }
+
+        .border{
+            height: 15vh;
         }
     }
     
@@ -277,6 +280,7 @@
 
         .background{
             padding: 1em 0.3em;
+            margin: 0;
         }
         
     }
