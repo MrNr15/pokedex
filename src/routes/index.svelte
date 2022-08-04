@@ -1,0 +1,187 @@
+<script>
+
+
+    function capitalizedWord(word){
+        return word.charAt(0).toUpperCase() + word.slice(1)
+    }
+
+    let pokemon = []
+    let search_pokemon = []
+    let shown_pokemon = []
+
+    let searching = false
+    let results = 150
+
+    const fetchPokemon = async () => {
+        const url = "https://pokeapi.co/api/v2/pokemon?limit=150"
+        const res = await fetch(url)
+        const data = await res.json()
+        const loadedPokemon = data.results.map((data, index) => {
+            return {
+                name: data.name,
+                cap_name: capitalizedWord(data.name),
+                id: index + 1,
+                image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + (index+1).toString() + ".png"
+            }
+        })
+
+        pokemon = loadedPokemon
+        search_pokemon = pokemon
+        shown_pokemon = pokemon.slice(0,20)
+    }
+
+    fetchPokemon()
+
+    function search_array(array, search){
+        let result = []
+        for (let i = 0; i < array.length; i++){
+            if (array[i].name.indexOf(search) != -1){
+                result.push(array[i])
+            }
+        }
+        return result
+    }
+
+    function search(){
+        searching = true
+        page = 1
+        search_pokemon = search_array(pokemon, search_name.toLowerCase())
+        shown_pokemon = search_pokemon.slice(page*20-20, page*20)
+        results = search_pokemon.length
+    }
+
+    import Gamecart from './cart.svelte';
+
+    let page = 1
+
+    let search_name = ""
+
+    function next(){
+
+        if (searching && page*20 < search_pokemon.length){
+            page += 1
+            shown_pokemon = search_pokemon.slice(page*20-20, page*20)
+        }
+        if (!searching && page*20 < pokemon.length){
+            page += 1
+            shown_pokemon = pokemon.slice(page*20-20, page*20)
+        }
+    }
+
+    function prev(){
+        if (searching && page > 1){
+            page -= 1
+            shown_pokemon = search_pokemon.slice(page*20-20, page*20)
+        }
+        if (!searching && page > 1){
+            page -= 1
+            shown_pokemon = pokemon.slice(page*20-20, page*20)
+        }
+    }
+
+    import { onMount } from 'svelte';
+
+    onMount(() => {  
+        document.getElementById("search").addEventListener("keypress", function(event){
+            if (event.keyCode === 13){
+                search()
+            }
+        })
+    })
+    
+</script>
+
+<div class="body">
+
+<h1>Pokedex</h1>
+
+    <div class="searchbar">
+        <input bind:value={search_name} type="text" class="search" id="search" placeholder="Search Pokemon" on:input={search}>
+    </div>
+    
+    <div class="grid">
+        {#each shown_pokemon as item}
+        <Gamecart item={item}/>
+        {/each}
+    </div>
+    
+    <div class="pages">
+        Showing {page*20-19}-{page*20-20 + shown_pokemon.length} of {results} results
+        {#if page > 1}
+        <button on:click={prev}>prev</button>
+        {/if}
+        {#if page*20 < search_pokemon.length}
+        <button on:click={next}>next</button>
+        {/if}
+    </div>
+</div>
+    
+    <div class="footer">
+        made by Mr.Nr.15
+    </div>
+
+<style>
+
+    :root{
+        --color-1: #EEC643;
+        --color-2: #97a1fc;
+        --color-3: #EEF0F2;
+        --color-4: #6F6866;
+        --color-5: #011638;
+    }
+
+    .body{
+        min-height: calc(100vh - 19px - 16px - 16px);
+        background-color: var(--color-1);
+    }
+
+    h1{
+        text-align: center;
+        color: var(--color-3);
+        background-color: var(--color-5);
+        padding: 0.25em;
+        margin: 0;
+    }
+        
+    .grid{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, min(300px));
+        grid-column-gap: 1rem;
+        grid-row-gap: 2rem;
+        justify-content: center;
+        justify-items: center;
+    }
+
+    .searchbar{
+        margin: 1em;
+    }
+
+    .search{
+        border-radius: 20px;
+        border: solid;
+        border-width: 4px;
+        border-color: lightgray;
+        font-size: 1em;
+    }
+
+    .pages{
+        font-size: 1.5em;
+        padding: 0.5em 2em 0.5em 2em;
+    }
+    .pages > button{
+        font-size: 1em;
+        border-radius: 10px;
+        border: solid;
+        border-width: 3px;
+        border-color: darkgray;
+    }
+
+    .footer{
+        background-color: var(--color-5);
+        color: white;
+        text-align: center;
+        padding: 1em;
+        margin: 0;
+    }
+
+</style>
