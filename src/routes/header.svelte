@@ -4,6 +4,11 @@
 
 <style>
 
+    :global(html){
+        overflow-x: hidden;
+        font-family: sans-serif;
+    }
+
     :root{
         --color-1: #293960;
         --color-6: #283044;

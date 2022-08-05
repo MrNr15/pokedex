@@ -130,7 +130,24 @@
 
         }
 
+        if (pokemon.id >= 150){
+            document.getElementById("next_button").disabled = true;
+            document.getElementById("next_button").style.opacity = 0;
+        }
+        if (pokemon.id <= 1){
+            document.getElementById("prev_button").disabled = true;
+            document.getElementById("prev_button").style.opacity = 0;
+        }
+
     })
+
+    function prev(){
+        window.location.href = "./" + (pokemon.id - 1).toString();
+    }
+
+    function next(){
+        window.location.href = "./" + (pokemon.id + 1).toString();
+    }
 
 </script>
 
@@ -182,8 +199,13 @@
                 <br>
             </div>
         </div>
+        <div class="buttons">
+            <button on:click={prev} id="prev_button">Prev</button>
+            <button on:click={next} id="next_button">Next</button>
+        </div>
     </div>
 </div>
+
 
 <Footer></Footer>
 
@@ -199,7 +221,7 @@
         background-color: var(--color-1);
         padding: 1em 3em 1em 3em;
         color: white;
-        margin: 25vh 0;
+        margin: 20vh 0;
         
         font-size: 1.5em;
     }
@@ -246,6 +268,11 @@
         border: solid;
         border-width: 5px;
         border-color: var(--color-5);
+    }
+
+    .buttons{
+        display: flex;
+        justify-content: space-between;
     }
 
     .stats{
