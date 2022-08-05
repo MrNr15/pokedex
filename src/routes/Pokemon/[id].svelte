@@ -41,7 +41,7 @@
             }
         }
         
-        let stat_id = (value % 5)*6 + value_id+1
+        let stat_id = (pokemon.id % 5)*6 + value_id+1
         
         const url_char = "https://pokeapi.co/api/v2/characteristic/" + stat_id.toString()
         const res_char = await fetch(url_char)
