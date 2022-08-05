@@ -31,7 +31,7 @@
         search_pokemon = pokemon
         shown_pokemon = pokemon.slice(0,20)
 
-        search()
+        search(false)
     }
 
     fetchPokemon()
@@ -46,7 +46,7 @@
         return result
     }
 
-    function search(){
+    function search(manual_search){
         searching = true
         page = 1
         search_pokemon = search_array(pokemon, search_name.toLowerCase())
@@ -83,9 +83,16 @@
         }
     }
 
+    function clear_search(){
+        document.getElementById("search").value = ""
+        search_name = ""
+        page = 1
+        search(true)
+    }
+
     import { onMount } from 'svelte';
 
-    onMount(() => {  
+    onMount(() => {
 
         document.getElementById("search").addEventListener("keypress", function(event){
             if (event.keyCode === 13){
@@ -101,7 +108,9 @@
 <div class="background">
     
     <div class="searchbar">
-        <input bind:value={search_name} type="text" class="search" id="search" placeholder="Search Pokemon" on:input={search}>
+        <input bind:value={search_name} type="text" class="search" id="search" placeholder="Search Pokemon" on:input={() => search(true)}>
+        <button class="clear_search not_phone" on:click={clear_search}>Clear Search</button>
+        <button class="clear_search phone" on:click={clear_search}>Clear</button>
     </div>
     
     <div class="grid">
@@ -151,6 +160,14 @@
         font-size: 1.3em;
     }
 
+    .clear_search{
+        border-radius: 20px;
+        border: solid;
+        border-width: 4px;
+        border-color: lightgray;
+        font-size: 1.3em;
+    }
+
     .pages{
         font-size: 1.5em;
         padding: 0.5em 2em 0.5em 2em;
@@ -164,7 +181,19 @@
         border-color: darkgray;
     }
 
+    .phone{
+        display: none;
+    }
+
     @media only screen and (max-width: 900px){
+
+        .not_phone{
+        display: none;
+        }
+
+        .phone{
+            display: block;
+        }
 
         .pages{
             font-size: 1.5em;
@@ -174,7 +203,7 @@
         .searchbar{
         display: flex;
         justify-content: center;
-        padding: 1em 0;
+        padding: 1em 0.25em;
         }
 
     .search{

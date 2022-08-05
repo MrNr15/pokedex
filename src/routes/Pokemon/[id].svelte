@@ -6,8 +6,9 @@
     let abilities = []
     let types = []
     let stats = []
+    let description = ""
     
-    export async function load({url2,params}){
+    export async function load({url3,params}){
         const id = params.id
         const url = "https://pokeapi.co/api/v2/pokemon/" + id.toString()
 
@@ -15,19 +16,41 @@
         const data = await res.json()
 
         pokemon = data
-        current_sprite = pokemon.sprites.front_default
 
+        
+        current_sprite = pokemon.sprites.front_default
+        
         abilities = pokemon.abilities.map((data, index) => {
             return capitalizedWord(data.ability.name)
         })
-
+        
         types = pokemon.types.map((data, index) => {
             return capitalizedWord(data.type.name)
         })
-
+        
         stats = pokemon.stats.map((data, index) => {
             return data.base_stat
         })
+        
+        let value = 0
+        let value_id = 0
+        for(let i = 0;i < stats.length;i++){
+            if (stats[i] > value){
+                value = stats[i]
+                value_id = i
+            }
+        }
+        
+        let stat_id = (value % 5)*6 + value_id+1
+        
+        const url_char = "https://pokeapi.co/api/v2/characteristic/" + stat_id.toString()
+        const res_char = await fetch(url_char)
+        if (res_char.status != 404){
+            const data_char = await res_char.json()   
+            description = data_char.descriptions[7].description
+        } else{
+            description = ""
+        }
 
     }
 
@@ -122,6 +145,7 @@
                     <img src={current_sprite} alt="" id="image">
                     <button on:click={toggle_shiny}>Shiny</button>
                 </div>
+                <p>{description}</p>
             </div>
             <div class="information">
                 <p>Name: {capitalizedWord(pokemon.name)}</p>
@@ -201,7 +225,16 @@
     .image{
         display: grid;
         justify-items: center;
+    }
+
+    .image-side{
         margin-right: 100px;
+        text-align: center;
+    }
+
+    .image-side > p{
+        padding: 0.5em;
+        font-size: 1.2em;
     }
     
     button{
@@ -254,10 +287,6 @@
             flex-direction: column;
             background-color: var(--color-6);
         }
-
-        .border{
-            height: 15vh;
-        }
     }
     
     @media only screen and (max-width: 900px){
@@ -267,6 +296,10 @@
             justify-items: center;
             margin: 0px;
             width: 100%;
+        }
+
+        .image-side{
+        margin-right: 0;
         }
         
         img{
