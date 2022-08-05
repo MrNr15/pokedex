@@ -28,6 +28,7 @@
         })
 
         pokemon = loadedPokemon
+        console.log(pokemon)
         search_pokemon = pokemon
         shown_pokemon = pokemon.slice(0,20)
 
@@ -39,7 +40,7 @@
     function search_array(array, search){
         let result = []
         for (let i = 0; i < array.length; i++){
-            if (array[i].name.indexOf(search) != -1){
+            if (array[i].name.indexOf(search) != -1 || array[i].id.toString().indexOf(search) != -1){
                 result.push(array[i])
             }
         }

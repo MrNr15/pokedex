@@ -97,6 +97,7 @@
             black_text = true
         } if (types[i] == "Ice"){
             color = "aqua"
+            black_text = true
         } if (types[i] == "Fighting"){
             color = "brown"
         } if (types[i] == "Ground"){
